@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "test_aoi_valencia",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": null, "descriptio": null, "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": -1, "extrude": 0, "visibility": -1, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -0.518796811433409, 39.666733435818898 ], [ -0.418862851359067, 39.666925271449202 ], [ -0.415124673301423, 39.606470710813099 ], [ -0.51231730280016, 39.608006718616899 ], [ -0.518796811433409, 39.666733435818898 ] ] ] ] } }
+]
+}

@@ -1,21 +1,40 @@
 import React, { useRef, useState } from "react";
-import { Map as MapContainer, TileLayer, FeatureGroup } from 'react-leaflet';
+import { Map as MapContainer, TileLayer, FeatureGroup, LayersControl } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw";
 
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import { Box, Button } from "grommet";
-import { Compass } from "grommet-icons";
 
-const maptiles = [
-  'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}',
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+import L from 'leaflet';
+
+import Control from 'react-leaflet-control';
+import test_aoi_valencia from '../../assets/test_aoi_valencia.geojson';
+import test_aoi_valencia_subpolygon from '../../assets/test_aoi_valencia_subpolygon.geojson';
+import LayerControlButton from "./layersControl";
+
+
+const mapTiles = [
+  {
+    name: 'OpenStreetMap',
+    attribution: '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+  },
+  {
+    name: 'GoogleMaps - Terrain',
+    attribution: '&copy <a href="https://about.google/brand-resource-center/products-and-services/geo-guidelines/#google-earth">GoogleMaps</a> Data 2021',
+    url: 'http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}'
+  },
+  {
+    name: 'GoogleMaps Sattelite',
+    attribution: '&copy <a href="https://about.google/brand-resource-center/products-and-services/geo-guidelines/#google-earth">GoogleMaps</a> Data 2021',
+    url: 'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}'
+  },
 ]
 
 const LeafLetMap = () => {
     const [ position, setPosition] = useState([47.07, 8.325]);
     const [ mapMarkings, setMapMarkings ] = useState([]);
-    const [ satelliteOrTerrain, setSatelliteOrTerrain ] = useState(false)
     let zoom = 12;
     const mapRef = useRef()
 
@@ -52,16 +71,30 @@ const LeafLetMap = () => {
     };
     // console.log(JSON.stringify(mapMarkings));
     let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
+
+    // L.geoJSON(states, {
+    //   style: function(feature) {
+    //       switch (feature.properties.party) {
+    //           case 'Built-up': return {color: "gray"};
+    //           case 'Crop 1':   return {color: "yellow"};
+    //           case 'Crop 2':   return {color: "lightblue"};
+    //           case 'Crop 3':   return {color: "lightgreen"};
+    //           case 'Fallow':   return {color: "lightbrown"};
+    //           case 'Forest':   return {color: "darkgreen"};
+    //       }
+    //   }
+  // }).addTo(map);
+
+
   return (
     <Box
     width="xlarge" 
     height="medium"
-    margin='large'
+    margin='small'
     alignSelf='center'
-    pad='xsmall'  
     direction='row'
     >
-      <Box width="xlarge" height="large" border>
+      <Box width="xlarge" height="large" pad='xsmall' border>
         <MapContainer 
             center={ position } 
             zoom={ zoom } 
@@ -72,8 +105,8 @@ const LeafLetMap = () => {
             <EditControl
               position="topright"
               onCreated={ onCreateHandler }
-              onEdited={ onEditHandler}
-              onDeleted={ onDeleteHandler}
+              onEdited={ onEditHandler }
+              onDeleted={ onDeleteHandler }
               draw={{
                 rectangle: false,
                 polyline: false,
@@ -82,16 +115,21 @@ const LeafLetMap = () => {
                 marker: false,
               }}
             />
-          </FeatureGroup>
-        <TileLayer
-        attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url={ satelliteOrTerrain ? maptiles[0] : maptiles[1] }
-        />
+          </FeatureGroup>          
+          <LayersControl position="topleft">
+            <LayersControl.BaseLayer checked name={`${mapTiles[0].name}`}>
+              <TileLayer attribution={`${mapTiles[0].attribution}`} url={`${mapTiles[0].url}`}/>
+            </LayersControl.BaseLayer> 
+            <LayersControl.BaseLayer name={`${mapTiles[1].name}`}>
+              <TileLayer attribution={`${mapTiles[1].attribution}`} url={`${mapTiles[1].url}`}/>
+            </LayersControl.BaseLayer> 
+            <LayersControl.BaseLayer name={`${mapTiles[2].name}`}>
+              <TileLayer attribution={`${mapTiles[2].attribution}`} url={`${mapTiles[2].url}`}/>
+            </LayersControl.BaseLayer> 
+          </LayersControl>
         </MapContainer>
       </Box>
-           {/* <pre className="text-left">{JSON.stringify(mapMarkings, 0, 2)}</pre> */}
            <Box margin='small' height='xsmall' width='small'>
-            <Button primary alignSelf='center' margin={{bottom: 'xlarge'}} icon={ <Compass /> } onClick={ () => setSatelliteOrTerrain(!satelliteOrTerrain) }/>
             <Button fill label='print' onClick={ () => console.log(polygonsMarked.length === 2 ? 'Please mark on the map' : polygonsMarked) }/>
           </Box>  
     </Box>
