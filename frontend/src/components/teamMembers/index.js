@@ -1,4 +1,4 @@
-
+import Jonas from '../../assets/Jonas.jpg';
 const Team = [
     { 
         name: 'Barry Sunderland', 
@@ -11,7 +11,7 @@ const Team = [
         name: 'Jonas Henriksson', 
         title: 'Data scientist', 
         personalInfo:'', 
-        image: '',
+        image: Jonas,
         linkedin: ''
     },
     {   

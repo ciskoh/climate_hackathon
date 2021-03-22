@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+/.chache
 # production
 /build
 

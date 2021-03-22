@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Map as MapContainer, TileLayer, FeatureGroup, Marker, Popup } from 'react-leaflet';
+import React, { useRef, useState } from "react";
+import { Map as MapContainer, TileLayer, FeatureGroup } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw";
 
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
-
-import L from "leaflet";
-
+import { Box, Button } from "grommet";
+import { Compass } from "grommet-icons";
 
 const maptiles = [
   'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}',
@@ -16,6 +15,7 @@ const maptiles = [
 const LeafLetMap = () => {
     const [ position, setPosition] = useState([47.07, 8.325]);
     const [ mapMarkings, setMapMarkings ] = useState([]);
+    const [ satelliteOrTerrain, setSatelliteOrTerrain ] = useState(false)
     let zoom = 12;
     const mapRef = useRef()
 
@@ -50,19 +50,28 @@ const LeafLetMap = () => {
         setMapMarkings( layers => layers.filter( layer => layer.id !== _leaflet_id));
       });
     };
-    console.log(mapMarkings);
+    // console.log(JSON.stringify(mapMarkings));
+    let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
   return (
-    <>
+    <Box
+    width="xlarge" 
+    height="medium"
+    margin='large'
+    alignSelf='center'
+    pad='xsmall'  
+    direction='row'
+    >
+      <Box width="xlarge" height="large" border>
         <MapContainer 
-            center={position} 
-            zoom={zoom} 
-            style={{ width: '100%', height: '900px'}}
-            ref={mapRef}
+            center={ position } 
+            zoom={ zoom } 
+            style={ { width: '100%', height: '900px' } }
+            ref={ mapRef }
         >
           <FeatureGroup>
             <EditControl
               position="topright"
-              onCreated={onCreateHandler}
+              onCreated={ onCreateHandler }
               onEdited={ onEditHandler}
               onDeleted={ onDeleteHandler}
               draw={{
@@ -76,11 +85,16 @@ const LeafLetMap = () => {
           </FeatureGroup>
         <TileLayer
         attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url={maptiles[1]}
+        url={ satelliteOrTerrain ? maptiles[0] : maptiles[1] }
         />
         </MapContainer>
-           <pre className="text-left">{JSON.stringify(mapMarkings, 0, 2)}</pre>
-    </>
+      </Box>
+           {/* <pre className="text-left">{JSON.stringify(mapMarkings, 0, 2)}</pre> */}
+           <Box margin='small' height='xsmall' width='small'>
+            <Button primary alignSelf='center' margin={{bottom: 'xlarge'}} icon={ <Compass /> } onClick={ () => setSatelliteOrTerrain(!satelliteOrTerrain) }/>
+            <Button fill label='print' onClick={ () => console.log(polygonsMarked.length === 2 ? 'Please mark on the map' : polygonsMarked) }/>
+          </Box>  
+    </Box>
   );
 };
 

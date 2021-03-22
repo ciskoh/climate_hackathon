@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navi from '../components/navi';
 
 import { Box, Stack } from 'grommet';
-import ExampleDataTable from '../components/dataTables/exampleTable';
 
 import LeafLetMap from '../components/mapComponent/drawOnMap';
+
 
 
 const HomePage = () => {
@@ -16,19 +16,10 @@ const HomePage = () => {
 
       <Box margin='small' flex direction='row' >
         <Stack anchor='center'>  
-        <Box 
-          width="large" 
-          height="large"
-          border
-          pad='xsmall'
-        >
+        <Box>
           <LeafLetMap />
         </Box>
         </Stack>
-        <Box align='end' justify='center' margin='medium'>
-        <ExampleDataTable />
-
-        </Box>
       </Box>
     </>
   )
