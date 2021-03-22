@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Anchor, Box, Grommet, Header, Image,  Menu, ResponsiveContext, Text } from 'grommet';
-import { Menu as MenuIcon, Group, MapLocation, FingerPrint } from 'grommet-icons';
+import { Grommet, Header, Anchor, Box, ResponsiveContext, Menu } from 'grommet';
+import { Menu as MenuIcon, Test, Group, MapLocation, Analytics } from 'grommet-icons';
 import { grommet } from 'grommet/themes';
 import ClimateHackathon from '../../assets/logos/ClimateHackathon.png';
 
@@ -45,6 +45,10 @@ export const Navi = () => {
                     label: <Box pad="small">The Team</Box>,
                     href: '/about',
                   },
+                  {
+                    label: <Box pad="small">Analysis</Box>,
+                    href: '/analysis',
+                  },
                 ]}
               />
             </Box>
@@ -54,9 +58,10 @@ export const Navi = () => {
               setIsSmallScreen(false)
             }
             <Box justify="end" direction="row" gap="medium">
-              <Anchor icon={<FingerPrint />} href="/" label="Home" />
-              <Anchor icon={<MapLocation />} href="/map" label="Map" />
-              <Anchor icon={<Group />} href="/about" label="The Team" />
+              <Anchor icon={<MapLocation />} href="/" label="Home" />
+              <Anchor icon={<Test />} href="/science" label="Scientifical Background" />
+              <Anchor icon={<Group />} href="/about" label="About" />
+              <Anchor icon={<Analytics />} href="/analysis" label="Analysis" />
             </Box>
             </>
           )
