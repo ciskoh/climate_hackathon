@@ -3,6 +3,25 @@ climate_hackathon
 
 our entry for the cool farm alliance challenge
 
+
+## environment
+create environment with conda :
+
+`conda create --name myenv --file environment.yml`
+
+## download sentinel images
+
+*download images from google earth engine as zip file
+    aoi : area of interest as json file
+    date_range : list of [start date, end_date] in 'YYYY-MM-DD' format
+    mode : sentinel_raw is the only implemented for now
+    band_names : list of band to keep from the original image defaults to ["B2", "B3", "B4", "B8"]
+    Returns None. saves zip file with image in data/raw folder 
+    import data*
+
+    image = data.get_gee_data()
+
+
 Project Organization
 ------------
 
