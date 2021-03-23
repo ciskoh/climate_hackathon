@@ -33,6 +33,9 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
     # Area of interest as gee object
     coords_list = coords['features'][0]["geometry"]["coordinates"][0][0]
     aoi_obj = ee.Geometry.Polygon(coords_list)
+
+    print(f"Downloading {mode} image for coordinates {coords_list.format()}")
+
     # date_range as gee object
     start_date = ee.Date(date_range[0])
     end_date = ee.Date(date_range[1])
@@ -55,7 +58,7 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
             'region': aoi_obj})
         response = requests.get(link)
         if not response.status_code == 200:
-            print(f"problem retrieve file from the link:\n {link})!")
+            print(f"problem retrieving file from the link:\n {link})!")
             return None
         # set output filename
         timestamp = re.sub("[^0-9]", "", dt.now().isoformat())
