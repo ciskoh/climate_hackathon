@@ -4,15 +4,17 @@ import thirdImage from '../../assets/Landpro3.png';
 
 export const landproParagraphs = [
 
-'Where does my crop grow well? Which part of my park should I restore?', 
-'What are the damages of the last fire/drought/flood?',
+'Where does my crop grow well?',
+'Which part of my park should I restore?', 
+'What are the damages of the last fire, drought or flood?',
 'Which part of this forest should be protected ?',
 'Every day, farmers, construction companies, forest and park managers, environmental operators, environmental conscious tourists ask these kinds of questions, but the answers require long-term knowledge of the area and deep understanding of the ecosystem.', 
-'LandPro  combines image segmentation with near-real time satellite data to give you a quick evaluation of any vegetated area by examining the spatial and temporal variability of vegetation. ',
-'LandPro can improve dramatically the effectiveness and efficiency of environmental interventions at small and big scale, support adaptive and sustainable agriculture, monitor the evolution of the ecosystem after an intervention or an extreme event.', 
-'LandPro can be especially useful to farmers and land administrators in developing countries, where the need for accurate, up-to-date data can help families produce more with less land.'
+'By examining the spatial and temporal variability of vegetation, we combine image segmentation methods, with near-real time satellite data to get a quick evaluation of vegetated areas. ',
+'Doing so improves dramatically the effectiveness and efficiency of environmental interventions at smaller as well as biger scales.', 
+'Especialy usefull to support adaptive and sustainable agriculture management, monitor the evolution of the ecosystem after an intervention or an extreme event.', 
+'LandPro tools can be distinctly useful to farmers and land administrators in developing regions, where the need for accurate, up-to-date data can help families produce more with smaller enviromental impact.'
 
-]
+];
 
 export const howItWorks = [
     {
@@ -30,11 +32,9 @@ export const howItWorks = [
         title: 'Infrared & radar data are used to classify the land productivity over time and space',
         image: thirdImage,
     },
-]
+];
 
-export const referencedArticles = [
-    {
+export const referencedArticles = {
         articleName: 'Assessment of land degradation in Mediterranean forests and grazing lands using a landscape unit approach and the normalized difference vegetation index',
         link:'https://www.sciencedirect.com/science/article/abs/pii/S014362281630649X?via%3Dihub',
-    }
-]
+};

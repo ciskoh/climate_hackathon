@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "^4.6.0",
+    "geojson": "^0.5.0",
     "grommet": "^2.16.3",
     "grommet-icons": "^4.5.0",
     "leaflet": "^1.7.1",

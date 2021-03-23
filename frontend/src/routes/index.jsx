@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
 // ==================== pages ====================
 import HomePage from '../pages/home';
-import SciencePage from '../pages/science';
 import AboutPage from '../pages/about';
+import MapPage from '../pages/map';
 // ===============================================
 
 
@@ -14,7 +14,7 @@ const Routes = () => {
             <Switch>
 
                     <Route exact path='/' component={HomePage} />
-                    <Route exact path='/science' component={SciencePage} />
+                    <Route exact path='/map' component={MapPage} />
                     <Route exact path='/about' component={AboutPage} />
                     <Route render={() => <Redirect to={{pathname: '/'}} />} />
 

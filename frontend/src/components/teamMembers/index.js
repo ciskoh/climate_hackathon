@@ -1,5 +1,5 @@
-import Jonas from '../../assets/Jonas.png';
-import Markus from '../../assets/Markus.png';
+import Jonas from '../../assets/teamMembers/Jonas.png';
+import Markus from '../../assets/teamMembers/Markus.png';
 const Team = [
     {
         name: 'Markus Giger', 

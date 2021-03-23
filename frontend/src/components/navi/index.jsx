@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Grommet, Header, Anchor, Box, ResponsiveContext, Menu } from 'grommet';
-import { Menu as MenuIcon, Test, Group, MapLocation } from 'grommet-icons';
+import { Anchor, Box, Grommet, Header, Image,  Menu, ResponsiveContext, Text } from 'grommet';
+import { Menu as MenuIcon, Group, MapLocation, FingerPrint } from 'grommet-icons';
 import { grommet } from 'grommet/themes';
+import ClimateHackathon from '../../assets/logos/ClimateHackathon.png';
 
 
 
-export const Navi = () => (
-  <Grommet theme={grommet}>
-    <Header background="light-5" pad="medium" height="xsmall">
+export const Navi = () => {
+  const [ isSmallScreen, setIsSmallScreen ] = useState(false);
+   return (
+    <Header background="light-5" pad="medium" height="xsmall" elevation='small'>
       <Anchor
         href="https://hacktheclimate.devpost.com/"
         label="Hack The Climate 2021"
-      />
-      <Box  width='xsmall' height='xsmall'>
+        icon={<Image src={ClimateHackathon} />}
+      />  
+      <Box  width='xsmall' height='xsmall' direction='row'>
+        <Text alignSelf='center' textAlign='center' size='xxlarge' weight='bold'margin={isSmallScreen ? {left: '-3.75em'} : ''}>LandPRO</Text>
       </Box>
+
       <ResponsiveContext.Consumer>
         {size =>
-          size === 'small' ? (
+          size === 'medium' ? (
             <Box justify="end">
+              {
+                setIsSmallScreen(true)
+              }
               <Menu
                 a11yTitle="Navigation Menu"
                 dropProps={{ align: { top: 'bottom', right: 'right' } }}
@@ -28,12 +36,13 @@ export const Navi = () => (
                     label: <Box pad="small">Home</Box>,
                     href: '/',
                   },
+
                   {
-                    label: <Box pad="small">Scientifical Background</Box>,
-                    href: '/science',
+                    label: <Box pad="small">Map</Box>,
+                    href: '/map',
                   },
-                  {
-                    label: <Box pad="small">About</Box>,
+                                    {
+                    label: <Box pad="small">The Team</Box>,
                     href: '/about',
                   },
                 ]}
@@ -41,17 +50,19 @@ export const Navi = () => (
             </Box>
           ) : (
             <>
+            {
+              setIsSmallScreen(false)
+            }
             <Box justify="end" direction="row" gap="medium">
-              <Anchor icon={<MapLocation />} href="/" label="Home" />
-              <Anchor icon={<Test />} href="/science" label="Scientifical Background" />
-              <Anchor icon={<Group />} href="/about" label="About" />
+              <Anchor icon={<FingerPrint />} href="/" label="Home" />
+              <Anchor icon={<MapLocation />} href="/map" label="Map" />
+              <Anchor icon={<Group />} href="/about" label="The Team" />
             </Box>
             </>
           )
         }
       </ResponsiveContext.Consumer>
     </Header>
-  </Grommet>
-);
-
+  );
+}
 export default Navi;
