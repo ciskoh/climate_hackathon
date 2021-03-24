@@ -104,7 +104,7 @@ def preprocess_glc(raw_file_path, dest_path, refine=60):
             if os.path.isdir(dest_path / f):
                 rmtree(dest_path / f)
 
-def main(dataset_name, parent_data_path=None):
+def make_dataset(dataset_name, parent_data_path=None):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -134,7 +134,7 @@ def main(dataset_name, parent_data_path=None):
 
 if __name__ == '__main__':
     dataset_name = "20210324162042725446"
-    main(dataset_name)
+    make_dataset(dataset_name)
     # not used in this stub but often useful for finding various files
 
     # find .env automagically by walking up directories until it's found, then
