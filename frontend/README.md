@@ -30,3 +30,5 @@ React Frontend Organization
             ├── reducers     <- 
             ├── constants    <- 
             └── index.js     <- the store file
+            
+ after installing the dependencies, to start the website locally just run the command yarn start if used yarn install or npm start if used npm install
