@@ -9,14 +9,15 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import cv2
 from osgeo import gdal
+from pathlib import Path
 
 #define paths, batch size and image width and height
 dir = os.getcwd()
 parent_dir = os.path.dirname(dir)
 
-PATH = parent_dir + '/data/Sentinel'                             
-PATH_IMAGES = PATH + '/images/'
-PATH_MASKS = PATH + '/masks/'
+PATH = Path("..", "..", "data", "processed")
+PATH_IMAGES = PATH / '/images/'
+PATH_MASKS = PATH / '/masks/'
 PATH_PREDICTIONS = PATH + '/predictions' 
 
 import sys
@@ -51,7 +52,6 @@ def load_data(path_images, path_masks, split=0.1):
     train_y, test_y = train_test_split(train_y, test_size=test_size, random_state=42)
 
     return (train_x, train_y), (valid_x, valid_y), (test_x, test_y)
-
 
 
 def read_image(x, width=256, height=256):

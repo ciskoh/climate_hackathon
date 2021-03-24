@@ -10,19 +10,24 @@ from geetools import cloud_mask
 import requests
 from datetime import datetime as dt
 import re
-
+import numpy as np
 def mask_clouds(ee_img):
     mask_all = cloud_mask.sentinel2()
     masked_ee_img = mask_all(ee_img)
     return masked_ee_img
 
-def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_raw", band_names=["B2", "B3", "B4", "B8"]):
-    """download images from google earth engine as zip file
-    aoi : area of interest as json file
+def get_gee_data(aoi, area_name, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_raw", band_names=["B2", "B3", "B4", "B8"]):
+    """ download images from google earth engine as zip file
+
+    Parameters
+    ----------
+    aoi : area of interest as list of [xcoord,ycoord] points
     date_range : list of [start date, end_date] in 'YYYY-MM-DD' format
     mode : 'sentinel_raw' for satellite images, 'global_land_cover' for copernicus glc maps
     band_names : only for mode == sentinel_raw. List of band to keep from the original image defaults to ["B2", "B3", "B4", "B8"]
-    Returns None. saves zip file with image in data/raw folder """
+
+    Returns None. saves zip file with image in data/raw folder
+    """
     # Initialize the Earth Engine module.
     try:
         ee.Initialize()
@@ -33,10 +38,9 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
         ee.Authenticate()
 
     # Area of interest as gee object
-    coords_list = coords['features'][0]["geometry"]["coordinates"][0][0]
-    aoi_obj = ee.Geometry.Polygon(coords_list)
+    aoi_obj = ee.Geometry.Polygon([aoi])
 
-    print(f"Downloading {mode} image for coordinates {coords_list}")
+    print(f"Downloading {mode} image for coordinates {aoi}")
     # date_range as gee object
     start_date = ee.Date(date_range[0])
     end_date = ee.Date(date_range[1])
@@ -66,19 +70,36 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
         print(f"problem retrieving file from the link:\n {link})!")
         return None
     # set output filename
-    timestamp = re.sub("[^0-9]", "", dt.now().isoformat())
-    out_file = Path("..", "..", "data", "raw", mode + timestamp + ".zip")
+
+    out_file = Path("..", "..", "data", "raw",  area_name + "_" + mode + ".zip")
     with open(out_file, "wb") as f:
         f.write(response.content)
     del response
     if os.path.exists(out_file):
         print(f"COMPLETED! image downloaded as zip file in \n {out_file}")
 
-if __name__ == '__main__':
-    data_path = Path("..", "..", "data", "raw", "test_aoi_valencia.geojson")
-    with open(data_path) as f:
+
+def main(aoi_path):
+    """ Retrieves input and target data from gee
+    to train ml model"""
+    with open(aoi_path) as f:
         coords = json.load(f)
-    print("testing sentinel_raw....")
-    get_gee_data(aoi=coords)
-    print("testing global land cover...")
-    get_gee_data(aoi=coords, mode="global_land_cover")
+    coords_list = coords['features']
+    print(f" found {len(coords_list)} area of interest")
+    # cycle through areas to download all of them
+    timestamp = re.sub("[^0-9]", "", dt.now().isoformat())
+    for n, c_dict in enumerate(coords_list):
+        c = c_dict["geometry"]["coordinates"][0]
+        print(f" \n downloading data for area {n}")
+
+        # if neede for area identification add this "_".join([str(abs(round(a[0]*10e2))) + str(abs(round(a[1]*10e2))) for a in c])
+        area_name = timestamp + "_" + str(n)
+
+        get_gee_data(aoi=c, area_name=area_name, mode="sentinel_raw")
+        get_gee_data(aoi=c, area_name=area_name, mode="global_land_cover")
+
+
+if __name__ == '__main__':
+
+    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global.geojson")
+    main(aoi_path)
