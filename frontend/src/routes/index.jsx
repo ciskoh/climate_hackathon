@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 // ==================== pages ====================
 import HomePage from '../pages/home';
 import AboutPage from '../pages/about';
+import MapPage from '../pages/map';
 import AnalysisPage from '../pages/analysis';
 // ===============================================
 
