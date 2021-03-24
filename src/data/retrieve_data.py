@@ -79,7 +79,7 @@ def get_gee_data(aoi, area_name, date_range=["2020-05-01", "2020-07-01"], mode="
         print(f"COMPLETED! image downloaded as zip file in \n {out_file}")
 
 
-def main(aoi_path):
+def download_dataset(aoi_path):
     """ Retrieves input and target data from gee
     to train ml model"""
     with open(aoi_path) as f:
@@ -97,9 +97,10 @@ def main(aoi_path):
 
         get_gee_data(aoi=c, area_name=area_name, mode="sentinel_raw")
         get_gee_data(aoi=c, area_name=area_name, mode="global_land_cover")
+    return timestamp
 
 
 if __name__ == '__main__':
 
-    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global.geojson")
+    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global_100.geojson")
     main(aoi_path)

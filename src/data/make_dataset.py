@@ -111,9 +111,8 @@ def make_dataset(dataset_name, parent_data_path=None):
     if parent_data_path == None:
         parent_data_path = Path("..", "..", "data", "raw")
     # get all data belonging to a dataset
-    images_file_list = [f for f in os.listdir(parent_data_path) if dataset_name in f and f.endswith("sentinel_raw.zip")]
-    masks_file_list = [f for f in os.listdir(parent_data_path) if
-                       dataset_name in f and f.endswith("global_land_cover.zip")]
+    images_file_list = sorted([f for f in os.listdir(parent_data_path) if dataset_name in f and f.endswith("sentinel_raw.zip")])
+    masks_file_list = sorted([f for f in os.listdir(parent_data_path) if dataset_name in f and f.endswith("global_land_cover.zip")])
 
     # prepare destination folder
     parent_dest_path = Path("..", "..", "data", "processed")
@@ -133,7 +132,8 @@ def make_dataset(dataset_name, parent_data_path=None):
         preprocess_glc(parent_data_path / img, dest_path / "masks", refine=60)
 
 if __name__ == '__main__':
-    dataset_name = "20210324162042725446"
+    dataset_name = "20210324225635924767"
+
     make_dataset(dataset_name)
     # not used in this stub but often useful for finding various files
 
