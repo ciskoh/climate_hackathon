@@ -1,7 +1,3 @@
-[__Binary_image_segmentation.ipynb__](https://gitlab.propulsion-home.ch/datascience/bootcamp/final-projects/ds-2020-09/caressoma/-/blob/master/notebooks/Binary_image_segmentation_final.ipynb) :  use this notebook for binary segmentation tasks, i.e. class 0 and 1 or 'unlabelled' and 'fat tissue'
 
-[__Multiclass_image_segmentation.ipynb__](https://gitlab.propulsion-home.ch/datascience/bootcamp/final-projects/ds-2020-09/caressoma/-/blob/master/notebooks/Multiclass_image_segmentation_final.ipynb): use this notebook for multiclass segmentation tasks, i.e.  'unlabelled', 'muscle tissue', 'fat tissue'. Currently the notebook only supports 3 classes, but it can be expanded
 
-[__Incremental_training.ipynb__](https://gitlab.propulsion-home.ch/datascience/bootcamp/final-projects/ds-2020-09/caressoma/-/blob/master/notebooks/Incremental_Training.ipynb) : use this notebook to train the model in iterations. After each iteration this notebook saves the progress in shape of performance plots and prediction images. Useful for visualization of the deep learning process
-
-[__Data Augmentation.ipynb__](https://gitlab.propulsion-home.ch/datascience/bootcamp/final-projects/ds-2020-09/caressoma/-/blob/master/notebooks/Data_Augmentation_.ipynb) : Use this notebook to apply data augmentation on the training data. This notebook applies data augmentation to every image in the training set. Detailed description can be found directly in the notebook.
+[__Multiclass_image_segmentation.ipynb__](https://gitlab.propulsion-home.ch/datascience/bootcamp/final-projects/ds-2020-09/caressoma/-/blob/master/notebooks/Multiclass_image_segmentation_final.ipynb): use this notebook for multiclass segmentation tasks,Currently the notebook only supports 3 classes, but it can be expanded
