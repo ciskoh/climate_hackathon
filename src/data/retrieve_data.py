@@ -27,14 +27,15 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
     try:
         ee.Initialize()
     except ee.ee_exception.EEException:
-        print("MISSING credentials!!!! \n copy the file ../../credentials to your home/.config/earthengine/ folder (linux/debian)")
-        return None
+        print("MISSING credentials!!!! \n you have to authenticate to Google earth engine with the following account:")
+        print("email account: landpro5196@gmail.com")
+        print("pw: LandPro2021")
+        ee.Authenticate()
 
     # Area of interest as gee object
     coords_list = coords['features'][0]["geometry"]["coordinates"][0][0]
     aoi_obj = ee.Geometry.Polygon(coords_list)
-
-    print(f"Downloading {mode} image for coordinates {coords_list.format()}")
+    print(f"Downloading {mode} image for coordinates {coords_list}")
 
     # date_range as gee object
     start_date = ee.Date(date_range[0])
