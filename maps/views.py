@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from maps.models import Map
+from maps.serializers import MapSerializer
+
+
+# List all invoices: api/invoices/
+class ViewMaps(ListAPIView):
+    queryset = Map.objects.all()
+    serializer_class = MapSerializer
+
