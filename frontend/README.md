@@ -12,14 +12,21 @@ React Frontend Organization
         │
         ├── assets           <- images used in the project.
         │  
-        ├── components         
-        │   │                 
+        ├── components                        
         │   ├── landProBase  <- material about landpro and the basic publication
         │   ├── mapComponent <- leaflet map component
         │   ├── navi         <- navi component for all the different pages
         │   └── teamMembers  <- team members basic info and card component
-        │
-        └── ...  <- 
-            └── 
-  
-
+        │  
+        ├── pages                        
+        │   ├── about        <- about page about our group
+        │   ├── home         <- home page with the background, inspiration and other details
+        │   └── map          <- the interactive map page
+        │  
+        ├── routes           <- router file with the different routes
+        │ 
+        └── store            <- a preparation infrastructure to import and export needed data                        
+            ├── actions      <- 
+            ├── reducers     <- 
+            ├── constants    <- 
+            └── index.js     <- the store file
