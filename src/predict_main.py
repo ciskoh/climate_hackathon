@@ -6,22 +6,28 @@ def predict_main(aoi):
     aoi: json file with area of intreste from frontend
     """
     # download images from gee
-    from data import retrieve_data
-    dataset_name = retrieve_data(aoi)
+    import data
+    dataset_name = data.download_dataset(aoi)
 
     # preprocess data (creates dataset folder structure in data/preprocessed
-    from data import make_dataset
-    make_dataset(dataset_name)
+    # from data import make_dataset
+    # make_dataset(dataset_name)
 
     # predict land cover
     from models import predict_model
-    prediction = predict_model(dataset_name)
+    #prediction = predict_model(dataset_name)
     # prediction is a json with subpolygones
 
     # get co2 estimations
-    from models import calc_vegetation_co_metric, calc_soil_co_metric
-    prediction = calc_vegetation_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
-    prediction = calc_soil_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
-    return prediction
+    #from models import calc_vegetation_co_metric, calc_soil_co_metric
+    #prediction = calc_vegetation_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
+    #prediction = calc_soil_co_metric(prediction) # adds attribute "soil_co2_metric" to predictions
+    #return prediction
 
     pass
+
+if __name__ == '__main__':
+    import os
+    aoi="/home/matt/Dropbox/github/climate_hackathon/data/raw/test_aoi_global.geojson"
+    print(os.getcwd())
+    predict_main(aoi)

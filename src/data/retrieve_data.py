@@ -11,12 +11,16 @@ import requests
 from datetime import datetime as dt
 import re
 import numpy as np
+
+
 def mask_clouds(ee_img):
     mask_all = cloud_mask.sentinel2()
     masked_ee_img = mask_all(ee_img)
     return masked_ee_img
 
-def get_gee_data(aoi, area_name, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_raw", band_names=["B2", "B3", "B4", "B8"]):
+
+def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_raw",
+                 band_names=["B2", "B3", "B4", "B8"]):
     """ download images from google earth engine as zip file
 
     Parameters
@@ -47,7 +51,7 @@ def get_gee_data(aoi, area_name, date_range=["2020-05-01", "2020-07-01"], mode="
     if mode == "sentinel_raw":
         # get sentinel collection
         sent2 = ee.ImageCollection(ee.ImageCollection("COPERNICUS/S2_SR"))
-        sent_coll = sent2.filterBounds(aoi_obj).filterDate(start_date,end_date)
+        sent_coll = sent2.filterBounds(aoi_obj).filterDate(start_date, end_date)
         # apply cloud removal
         # map function over collection
         cloud_free_coll = sent_coll.map(mask_clouds)
@@ -65,21 +69,29 @@ def get_gee_data(aoi, area_name, date_range=["2020-05-01", "2020-07-01"], mode="
         'crs': 'EPSG:4326',
         'fileFormat': 'GeoTIFF',
         'region': aoi_obj})
+    return link
+
+
+def download_data_from_link(link, area_name, mode, data_parent_path=None):
+    if not data_parent_path:
+        data_parent_path = Path("..", "..", "data", "raw")
+
     response = requests.get(link)
     if not response.status_code == 200:
         print(f"problem retrieving file from the link:\n {link})!")
         return None
     # set output filename
 
-    out_file = Path("..", "..", "data", "raw",  area_name + "_" + mode + ".zip")
+    out_file = data_parent_path / str(area_name + "_" + mode + ".zip")
     with open(out_file, "wb") as f:
         f.write(response.content)
     del response
     if os.path.exists(out_file):
         print(f"COMPLETED! image downloaded as zip file in \n {out_file}")
+    return None
 
 
-def download_dataset(aoi_path):
+def download_dataset(aoi_path, data_parent_path=None, get_glc=True):
     """ Retrieves input and target data from gee
     to train ml model"""
     with open(aoi_path) as f:
@@ -95,12 +107,15 @@ def download_dataset(aoi_path):
         # if neede for area identification add this "_".join([str(abs(round(a[0]*10e2))) + str(abs(round(a[1]*10e2))) for a in c])
         area_name = timestamp + "_" + str(n)
 
-        get_gee_data(aoi=c, area_name=area_name, mode="sentinel_raw")
-        get_gee_data(aoi=c, area_name=area_name, mode="global_land_cover")
+        link = get_gee_data(aoi=c, mode="sentinel_raw")
+        download_data_from_link(link, area_name, mode="sentinel_raw", data_parent_path=data_parent_path)
+        if get_glc:
+            link2 = get_gee_data(aoi=c, mode="global_land_cover")
+            download_data_from_link(link2, area_name,mode="global_land_cover", data_parent_path=data_parent_path)
+
     return timestamp
 
 
 if __name__ == '__main__':
-
-    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global_100.geojson")
-    download(aoi_path)
+    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global.geojson")
+    download_dataset(aoi_path)

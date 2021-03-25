@@ -9,3 +9,4 @@ def create_and_preprocess_dataset(aoi_path):
     dataset_name = download_dataset(aoi_path)
     make_dataset(dataset_name)
     print(f"dataset {dataset_name} downloaded and preprocessed")
+
