@@ -20,9 +20,8 @@ import test_aoi_valencia_subpolygon from '../../assets/test_aoi_valencia_subpoly
 import test_aoi_valencia_subpolygon_but_json from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
 
 import { temporalPolygon } from './experimetalPolygon';
-import AnalysisTable from "./analysisTable";
+import AnalysisTable, { tempCoordinates } from "./analysisTable";
 
-let valenciaQ = [ -0.490210232840616, 39.652317010415992 ];
 // =========================================================
 
 
@@ -71,24 +70,10 @@ const LeafLetMap = () => {
   let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
 
 
-  // let polyStyles = feature => {
-  //     switch (feature.properties.land_cover) {
-  //         case 'Built-up': return {color: "gray"};
-  //         case 'Crop 1':   return {color: "yellow"};
-  //         case 'Crop 2':   return {color: "lightblue"};
-  //         case 'Crop 3':   return {color: "lightgreen"};
-  //         case 'Fallow':   return {color: "lightbrown"};
-  //         case 'Forest':   return {color: "darkgreen"};
-  //         default: return {color: "darkgreen"};
-  //   }
-  // }
-
-
-
   return (
-    <Box width="xlarge" height="large" margin='xsmall' alignSelf='center' direction='row' >
-      <Box elevation='medium' height='100%' width="75vw" pad='xsmall' border>
-        <MapContainer style={ { width: '100%', height: '900px' } }
+    <Box width="95vw" height="large" margin='xsmall' alignSelf='center' direction='coulmn' >
+      <Box elevation='medium' height='100%' width="60vw" pad='xsmall' border>
+        <MapContainer style={ { width: '100%', height: '100%' } }
           center={ position } zoom={ zoom } ref={ mapRef }
         >
           <FeatureGroup>
@@ -119,12 +104,15 @@ const LeafLetMap = () => {
             <LayersControl.Overlay name="tempLayer">
           <Polygon positions={ temporalPolygon } color='black'/>
             </LayersControl.Overlay>
+              {
+                tempCoordinates.map(feature => 
+            <LayersControl.Overlay name={`${feature.polygonName}`}>
+                  <Polygon key={feature.id} positions={ feature.coordinates } color={ feature.landCover }/>
+            </LayersControl.Overlay>
+                  )
+              }
+
           </LayersControl>
-          {
-            test_aoi_valencia_subpolygon_but_json.features.map(feature => 
-              <Polygon key={feature.properties.id} positions={ feature.geometry.coordinates } />
-              )
-          }
         </MapContainer>
       </Box>
 
@@ -133,10 +121,10 @@ const LeafLetMap = () => {
         <Box elevation='medium' round='medium' margin='small' height='xsmall' width='small'>
           <Button fill label='print' onClick={ () => console.log(polygonsMarked.length === 2 ? 'Please mark on the map' : polygonsMarked) }/>
         </Box>  
-        <Box elevation='medium' width='100%'>
+      </Box>
+        <Box elevation='medium' width='40vw' height='100%' border>
           <AnalysisTable />
         </Box>
-      </Box>
 
     </Box>
   );

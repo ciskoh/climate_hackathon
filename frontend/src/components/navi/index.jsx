@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import { Grommet, Header, Anchor, Box, ResponsiveContext, Menu, Text, Image } from 'grommet';
-import { Menu as MenuIcon, Test, Group, MapLocation, Analytics } from 'grommet-icons';
-import { grommet } from 'grommet/themes';
+import { Anchor, Box, Header, Image,  Menu, ResponsiveContext, Text } from 'grommet';
+import { Menu as MenuIcon, Group, MapLocation, FingerPrint } from 'grommet-icons';
 import ClimateHackathon from '../../assets/logos/ClimateHackathon.png';
 
 
@@ -16,10 +15,6 @@ export const Navi = () => {
         label="Hack The Climate 2021"
         icon={<Image src={ClimateHackathon} />}
       />  
-      <Box  width='xsmall' height='xsmall' direction='row'>
-        <Text alignSelf='center' textAlign='center' size='xxlarge' weight='bold'margin={isSmallScreen ? {left: '-3.75em'} : ''}>LandPRO</Text>
-      </Box>
-
       <ResponsiveContext.Consumer>
         {size =>
           size === 'medium' ? (
@@ -34,7 +29,7 @@ export const Navi = () => {
                 items={[
                   {
                     label: <Box pad="small">Home</Box>,
-                    href: '/',
+                    href: '/climate',
                   },
 
                   {
@@ -43,11 +38,7 @@ export const Navi = () => {
                   },
                                     {
                     label: <Box pad="small">The Team</Box>,
-                    href: '/about',
-                  },
-                  {
-                    label: <Box pad="small">Analysis</Box>,
-                    href: '/analysis',
+                    href: '/about/',
                   },
                 ]}
               />
@@ -58,10 +49,9 @@ export const Navi = () => {
               setIsSmallScreen(false)
             }
             <Box justify="end" direction="row" gap="medium">
-              <Anchor icon={<MapLocation />} href="/" label="Home" />
-              <Anchor icon={<Test />} href="/science" label="Scientifical Background" />
-              <Anchor icon={<Group />} href="/about" label="About" />
-              <Anchor icon={<Analytics />} href="/analysis" label="Analysis" />
+              <Anchor icon={<FingerPrint />} href="/climate" label="Home" />
+              <Anchor icon={<MapLocation />} href="/map" label="Map" />
+              <Anchor icon={<Group />} href="/about/" label="The Team" />
             </Box>
             </>
           )

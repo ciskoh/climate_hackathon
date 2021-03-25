@@ -21,7 +21,7 @@ const AnalysisPage = () => {
           border
           pad='xsmall'
         >
-          <LeafLetMap />
+          {/* <LeafLetMap /> */}
         </Box>
         </Stack>
         <Box align='end' justify='center' margin='medium'>
