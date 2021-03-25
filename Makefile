@@ -72,6 +72,27 @@ else
 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 endif
 
+
+## Run Django backend in conda env
+init: 
+	python manage.py migrate
+	python manage.py createsuperuser
+	python manage.py runserver
+
+## Create postgres database
+##	first install postgres
+## sudo apt-get install postgresql postgresql-contrib
+## sudo apt-get install libpq-dev python3-dev
+create_postgres:
+	sudo -u postgres psql
+	CREATE DATABASE mydb;
+	CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypass';
+	ALTER ROLE myuser SET client_encoding TO 'utf8';
+	ALTER ROLE myuser SET default_transaction_isolation TO 'read committed';
+	ALTER ROLE myuser SET timezone TO 'UTC';
+	GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;
+  	\q
+
 ## Test python environment is setup correctly
 test_environment:
 	$(PYTHON_INTERPRETER) test_environment.py

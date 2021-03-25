@@ -6,4 +6,4 @@ class MapSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Map
-        fields = ['id', 'created', 'updated', 'name', 'data']
+        fields = ['id', 'created', 'updated', 'coordinates', 'data']
