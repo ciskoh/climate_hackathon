@@ -29,6 +29,7 @@ import AnalysisTable, { tempCoordinates } from "./analysisTable";
 const LeafLetMap = () => {
   const [ position, setPosition] = useState([47.07, 8.325]);
   const [ mapMarkings, setMapMarkings ] = useState([]);
+  const [ results, setResults ] = useState({});
   let zoom = 12;
   const mapRef = useRef()
 
@@ -69,6 +70,23 @@ const LeafLetMap = () => {
   // console.log(JSON.stringify(mapMarkings));
   let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const url = `http://localhost:8000/backend/api/maps/new/`;
+    const config = {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify({ "coordinates": mapMarkings[0] }),
+    };
+
+    fetch(url, config)
+      .then((response) => response.json())
+      .then((data) => {
+        setResults(data)
+      });
+  };
 
   return (
     <Box width="95vw" height="large" margin='xsmall' alignSelf='center' direction='coulmn' >
@@ -118,8 +136,11 @@ const LeafLetMap = () => {
 
       <Box margin={{left: 'small'}} width='25vw' align='center' >
 
-        <Box elevation='medium' round='medium' margin='small' height='xsmall' width='small'>
+      <Box elevation='medium' round='medium' margin='small' height='xsmall' width='small'>
           <Button fill label='print' onClick={ () => console.log(polygonsMarked.length === 2 ? 'Please mark on the map' : polygonsMarked) }/>
+        </Box>         
+        <Box elevation='medium' round='medium' margin='small' height='xsmall' width='small'>
+          <Button fill label='Submit Polygon' onClick={handleSubmit}/>
         </Box>  
       </Box>
         <Box elevation='medium' width='40vw' height='100%' border>

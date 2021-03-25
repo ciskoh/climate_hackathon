@@ -20,7 +20,8 @@ class NewCoordinatesMaps(CreateAPIView):
         data = self.request.data
         coor = data.get("coordinates")
         serializer.save(coordinates=coor)
-        resu = predict_main(coor)
+        # predict_results = predict_main(coor)
+        predict_results = {"name": "john"}
         print(coor)
-        print(resu)
-        serializer.save(data=resu)
+        print(predict_results)
+        serializer.save(data=predict_results)
