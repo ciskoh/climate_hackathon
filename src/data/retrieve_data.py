@@ -103,4 +103,4 @@ def download_dataset(aoi_path):
 if __name__ == '__main__':
 
     aoi_path = Path("..", "..", "data", "raw", "test_aoi_global_100.geojson")
-    main(aoi_path)
+    download(aoi_path)
