@@ -20,7 +20,7 @@ def predict_main(aoi):
 
     # get co2 estimations
     from models import calc_vegetation_co_metric, calc_soil_co_metric
-    prediction = calc vegetation_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
+    prediction = calc_vegetation_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
     prediction = calc_soil_co_metric(prediction) # adds attribute "veg_co2_metric" to predictions
     return prediction
 
