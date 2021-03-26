@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
 import { Box, DataTable, Meter, Text } from 'grommet';
 import geojsonFile from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
@@ -41,53 +41,34 @@ let columns = [
   },
 ]
 
-// console.log(geojsonFile);
-const tempData = geojsonFile;
-const tempFeatures = geojsonFile.features
-const tableName = tempData.name
-export let tempCoordinates = [];
-
-let polyColor = landCover => {
-  // console.log('from lopycolor function',feature.landCover);
-  if (landCover === 'Built-up') return "gray"; 
-  if (landCover === 'Crop 1') return "yellow";
-  if (landCover === 'Crop 2') return "lightblue";
-  if (landCover === 'Crop 3') return "lightgreen";
-  if (landCover === 'Fallow') return "lightbrown";
-  if (landCover === 'Forest') return "darkgreen";
-}
 
 
-tempFeatures.forEach(feature =>{ 
-  const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, landCover: polyColor(feature.properties.land_cover) ,coordinates: feature.geometry.coordinates[0][0]};
-  // console.log(tempFeature);
-  tempFeature.coordinates.forEach(coordinates => {
-    let tempLat = coordinates[0];
-    coordinates[0] = coordinates[1];
-    coordinates[1] = tempLat
+const AnalysisTable = ({results}) => {
+  const [ data, setData] = useState(geojsonFile)
 
-  })
-  tempCoordinates.push(tempFeature)  
-});
+  const tableName = geojsonFile.name
 
-let DATA = [];
-tempFeatures.forEach(feature => 
-  DATA.push(feature.properties)  
-)
 
-// console.log('the temp coord', tempCoordinates);
+  useEffect(() => {
+    let DATA = [];
+    const tempFeatures = results.features
+    tempFeatures.forEach(feature => 
+      DATA.push(feature.properties)  
+    )
+    setData(DATA)
+  }, [results])
 
-const AnalysisTable = () => (
-
-      <Box align="center" pad="medium" height='100%'>
-        <Text weight='bold'>{tableName}</Text>
-        <DataTable 
-          sortable 
-          columns={columns} 
-          data={DATA} 
-          size="100%"
-        />
-      </Box>
-);
+  return (
+    <Box align="center" pad="medium" height='100%'>
+      <Text weight='bold'>{tableName}</Text>
+      <DataTable 
+        sortable 
+        columns={columns} 
+        data={data} 
+        size="100%"
+      />
+    </Box>
+  )
+};
 
 export default AnalysisTable;
