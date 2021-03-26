@@ -8,9 +8,14 @@ our entry for the cool farm alliance challenge
 create environment with conda :
 
 `conda create --name myenv --file environment.yml`
+`conda activate myenv`
 
+## django backend setup
+Create postgres database
+`make create_postgress`
 
-
+Run Backend
+`make init`
 # Introduction
 
 
