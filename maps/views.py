@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 
 from maps.models import Map
 from maps.serializers import MapSerializer
-from src import predict_main
+# from src import predict_main
 
 
 # List all invoices: api/invoices/
