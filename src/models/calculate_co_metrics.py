@@ -22,12 +22,24 @@ def calc_soil_co_metric(aoi):
     aoi is a json file with multiple polygones
     returns updated aoi with co2 estimates for each polygone as attributes
     """
-    masked, mask_transform = mask(dataset=src, shapes=gdf.geometry, crop=True)
-    show(masked, transform=mask_transform)
+    gdf = gpd.read_file(aoi)
+    
+    soc_array = np.zeros(len(gdf['geometry']))
 
-    profile = src.meta
-    WIDTH = masked.shape[2]  ## get the dimensions of the image we are writting out
-    HEIGHT = masked.shape[1]
-    profile.update(driver='GTiff', transform=mask_transform, height=HEIGHT, width=WIDTH)
-    print(profile)  ## check on the updated profile
+    for i in range(len(gdf['geometry'])):
+      masked, mask_transform = mask(dataset=src,shapes=gdf.geometry[i],crop=True)
+      profile = src.meta
+      WIDTH = masked.shape[2] ## get the dimensions of the image we are writting out
+      HEIGHT = masked.shape[1]
+      profile.update(driver='GTiff', transform=mask_transform, height = HEIGHT, width = WIDTH)
+      print(profile) ## check on the updated profile
+      with rasterio.open('clip.tif', 'w', **profile) as dst:
+        dst.write(masked)
+      g_image = gdal.Open('clip.tif')
+      a_image = g_image.ReadAsArray()
+      a_image.mean()
+      soc_array[i] = a_image.mean()
+    
+    print(soc_array)
+    
 
