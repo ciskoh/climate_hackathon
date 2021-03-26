@@ -16,13 +16,21 @@ create environment with conda :
 
 # Main blocks
 
-## Retrieve satellite images
+1. Retrieve satellite images
 
-## Detect land cover and segment
+Multispectral images are retrieved using Google earth engine thorugh a python script. The following functions allow to download relevant data given a geojson with coordinates of the area of interest:
+- Downloading data
+    data.download_dataset(aoi)
+- Preprocess images
+    data.make_dataset(dataset name)
+ 
+2. Detect land cover and segment
 
-## Calculate co2 metrics
+    models.predict_model()
 
-## User interaction (frontend & backend)
+3. Calculate co2 metrics
+    
+4. User interaction (frontend & backend)
 
 
 
