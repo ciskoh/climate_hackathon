@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
 import { Box, DataTable, Meter, Text } from 'grommet';
 import geojsonFile from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
@@ -71,6 +71,10 @@ const tempFeatures = tempData.features
 const tableName = tempData.name
 
 console.log(newGeojson);
+const AnalysisTable = ({results}) => {
+  const [ data, setData] = useState(geojsonFile)
+
+  const tableName = geojsonFile.name
 
 let polyColor = properties => {
   // console.log('from lopycolor function',properties);
@@ -79,7 +83,7 @@ let polyColor = properties => {
   if (properties.land_cover === 'Forest') return "darkgreen";
 }
 
-export let tempCoordinates = [];
+let tempCoordinates = [];
 tempFeatures.forEach(feature =>{ 
   const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, land_management: feature.properties.land_management, landCover: polyColor(feature.properties), soil_co2_estimates: feature.properties.soil_co2_estimates, vegetation_co2_estimates: feature.properties.vegetation_co2_estimates, coordinates: feature.geometry.coordinates[0]};
   // console.log(tempFeature.coordinates);
@@ -110,5 +114,26 @@ const AnalysisTable = () => (
     />
   </Box>
 );
+  useEffect(() => {
+    let DATA = [];
+    const tempFeatures = results.features
+    tempFeatures.forEach(feature => 
+      DATA.push(feature.properties)  
+    )
+    setData(DATA)
+  }, [results])
+
+  return (
+    <Box align="center" pad="medium" height='100%'>
+      <Text weight='bold'>{tableName}</Text>
+      <DataTable 
+        sortable 
+        columns={columns} 
+        data={data} 
+        size="100%"
+      />
+    </Box>
+  )
+};
 
 export default AnalysisTable;

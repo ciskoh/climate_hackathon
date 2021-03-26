@@ -18,8 +18,6 @@ const AnalysisPage = () => {
           <AnalysisTable />
         </Box>
         <Box align='end' justify='center' margin='medium'>
-
-
         </Box>
       </Box>
     </>

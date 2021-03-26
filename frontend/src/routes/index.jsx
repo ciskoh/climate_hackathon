@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import HomePage from '../pages/home';
 import AboutPage from '../pages/about';
 import MapPage from '../pages/map';
-import AnalysisPage from '../pages/analysis';
 // ===============================================
 
 
@@ -17,7 +16,6 @@ const Routes = () => {
                     <Route exact path='/' component={HomePage} />
                     <Route exact path='/map' component={MapPage} />
                     <Route exact path='/about' component={AboutPage} />
-                    <Route exact path='/analysis' component={AnalysisPage} />
                     <Route render={() => <Redirect to={{pathname: '/'}} />} />
 
             </Switch>

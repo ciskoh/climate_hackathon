@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Anchor, Box, Header, Image,  Menu, ResponsiveContext, Text } from 'grommet';
+import { Anchor, Box, Header, Image,  Menu, ResponsiveContext } from 'grommet';
 import { Menu as MenuIcon, Group, MapLocation, FingerPrint, BarChart } from 'grommet-icons';
 import ClimateHackathon from '../../assets/logos/ClimateHackathon.png';
 

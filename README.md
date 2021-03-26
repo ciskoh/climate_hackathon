@@ -9,6 +9,31 @@ create environment with conda :
 
 `conda create --name myenv --file environment.yml`
 
+
+
+# Introduction
+
+
+# Main blocks
+
+1. Retrieve satellite images
+
+Multispectral images are retrieved using Google earth engine thorugh a python script. The following functions allow to download relevant data given a geojson with coordinates of the area of interest:
+- Downloading data
+    data.download_dataset(aoi)
+- Preprocess images
+    data.make_dataset(dataset name)
+ 
+2. Detect land cover and segment
+
+    models.predict_model()
+
+3. Calculate co2 metrics
+    
+4. User interaction (frontend & backend)
+
+
+
 ## download sentinel images
 
 *download images from google earth engine as zip file
