@@ -83,16 +83,14 @@ let polyColor = properties => {
   if (properties.land_cover === 'Forest') return "darkgreen";
 }
 
-let tempCoordinates = [];
+
+
+
+
+
 tempFeatures.forEach(feature =>{ 
   const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, land_management: feature.properties.land_management, landCover: polyColor(feature.properties), soil_co2_estimates: feature.properties.soil_co2_estimates, vegetation_co2_estimates: feature.properties.vegetation_co2_estimates, coordinates: feature.geometry.coordinates[0]};
   // console.log(tempFeature.coordinates);
-  tempFeature.coordinates.forEach((coordinate) => {
-    let tempLat = coordinate[0];
-    coordinate[0] = coordinate[1];
-    coordinate[1] = tempLat
-  })
-  tempCoordinates.push(tempFeature)  
 });
 
 let DATA = [];
