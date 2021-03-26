@@ -2,9 +2,9 @@ import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navi from '../components/navi';
 
-import { Box, Stack } from 'grommet';
+import { Box } from 'grommet';
+import AnalysisTable from '../components/mapComponent/analysisTable';
 
-import LeafLetMap from '../components/mapComponent/drawOnMap';
 
 
 const AnalysisPage = () => {
@@ -13,17 +13,10 @@ const AnalysisPage = () => {
     <>
       <Navi />
 
-      <Box margin='small' flex direction='row' >
-        <Stack anchor='center'>  
-        <Box 
-          width="large" 
-          height="large"
-          border
-          pad='xsmall'
-        >
-          {/* <LeafLetMap /> */}
+      <Box width="95vw" height="2xl" margin='medium' pad='medium' alignSelf='center' direction='coulmn' >
+      <Box elevation='medium' width='2xl' height='100%' border>
+          <AnalysisTable />
         </Box>
-        </Stack>
         <Box align='end' justify='center' margin='medium'>
 
 

@@ -2,13 +2,20 @@ import React from 'react';
 
 import { Box, DataTable, Meter, Text } from 'grommet';
 import geojsonFile from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
-
+import test_aoi_subpolygon_with_metrics from '../../assets/test_aoi_subpolygon_with_metrics.json';
+import { number } from 'prop-types';
 
 let columns = [
   {
-    property: 'id',
+    property: 'fid',
     header: <Text>ID</Text>,
     sortable: true,
+    size: 'xxsmall',
+
+  },
+  {
+    property: 'DN',
+    header: <Text>DN</Text>,
     size: 'xxsmall',
 
   },
@@ -25,47 +32,61 @@ let columns = [
     size: 'small',
   },
   {
-    property: 'co2_metric_1',
-    header: 'co2_metric_1',
+    property: 'soil_co2_estimates',
+    header: 'Soil CO2 Estimates',
     sortable: true,
-    size: '',
+    size: 'medium',
+
     render: datum => (
       <Box pad={{ vertical: 'xsmall' }}>
         <Meter
-          values={[{ value: datum.co2_metric_1 }]}
+          values={[{ value: datum.soil_co2_estimates }]}
           thickness="small"
-          size="small"
+          size="large"
+        />
+      </Box>
+    ),
+  },
+  {
+    property: 'vegetation_co2_estimates',
+    header: 'vegetation_co2_estimates',
+    sortable: true,
+    size: 'medium',
+    render: datum => (
+      <Box pad={{ vertical: 'xsmall' }}>
+        <Meter
+          values={[{ value: datum.vegetation_co2_estimates }]}
+          thickness="small"
+          size="large"
         />
       </Box>
     ),
   },
 ]
 
-// console.log(geojsonFile);
-const tempData = geojsonFile;
-const tempFeatures = geojsonFile.features
-const tableName = tempData.name
-export let tempCoordinates = [];
+const newGeojson = test_aoi_subpolygon_with_metrics;
 
-let polyColor = landCover => {
-  // console.log('from lopycolor function',feature.landCover);
-  if (landCover === 'Built-up') return "gray"; 
-  if (landCover === 'Crop 1') return "yellow";
-  if (landCover === 'Crop 2') return "lightblue";
-  if (landCover === 'Crop 3') return "lightgreen";
-  if (landCover === 'Fallow') return "lightbrown";
-  if (landCover === 'Forest') return "darkgreen";
+const tempData = newGeojson;
+const tempFeatures = tempData.features
+const tableName = tempData.name
+
+console.log(newGeojson);
+
+let polyColor = properties => {
+  // console.log('from lopycolor function',properties);
+  if (properties.land_cover === 'Cropland 1') return "gray"; 
+  if (properties.land_cover === 'Cropland 2') return "yellow";
+  if (properties.land_cover === 'Forest') return "darkgreen";
 }
 
-
+export let tempCoordinates = [];
 tempFeatures.forEach(feature =>{ 
-  const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, landCover: polyColor(feature.properties.land_cover) ,coordinates: feature.geometry.coordinates[0][0]};
-  // console.log(tempFeature);
-  tempFeature.coordinates.forEach(coordinates => {
-    let tempLat = coordinates[0];
-    coordinates[0] = coordinates[1];
-    coordinates[1] = tempLat
-
+  const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, land_management: feature.properties.land_management, landCover: polyColor(feature.properties), soil_co2_estimates: feature.properties.soil_co2_estimates, vegetation_co2_estimates: feature.properties.vegetation_co2_estimates, coordinates: feature.geometry.coordinates[0]};
+  // console.log(tempFeature.coordinates);
+  tempFeature.coordinates.forEach((coordinate) => {
+    let tempLat = coordinate[0];
+    coordinate[0] = coordinate[1];
+    coordinate[1] = tempLat
   })
   tempCoordinates.push(tempFeature)  
 });
@@ -79,15 +100,15 @@ tempFeatures.forEach(feature =>
 
 const AnalysisTable = () => (
 
-      <Box align="center" pad="medium" height='100%'>
-        <Text weight='bold'>{tableName}</Text>
-        <DataTable 
-          sortable 
-          columns={columns} 
-          data={DATA} 
-          size="100%"
-        />
-      </Box>
+  <Box align="center" pad="medium" height='100%'>
+    <Text weight='bold'>{tableName}</Text>
+    <DataTable 
+      sortable 
+      columns={columns} 
+      data={DATA} 
+      size="100%"
+    />
+  </Box>
 );
 
 export default AnalysisTable;

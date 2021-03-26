@@ -14,10 +14,6 @@ import Control from 'react-leaflet-control';
 import { mapTiles } from './mapLayers';
 // ========================================================= 
 // ======================  temp stuff ====================== 
-import test_aoi_valencia from '../../assets/test_aoi_valencia.geojson';
-import test_aoi_valencia_subpolygon from '../../assets/test_aoi_valencia_subpolygon.geojson';
-
-import test_aoi_valencia_subpolygon_but_json from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
 
 import { temporalPolygon } from './experimetalPolygon';
 import AnalysisTable, { tempCoordinates } from "./analysisTable";
@@ -33,7 +29,7 @@ const LeafLetMap = () => {
   let zoom = 12;
   const mapRef = useRef()
 
-  const onCreateHandler = (event) => {
+  const onCreateHandler = event => {
     console.log(event);
     const { layerType, layer } = event;
     if (layerType === 'polygon') {
@@ -45,7 +41,7 @@ const LeafLetMap = () => {
       ])
     }
   };
-  const onEditHandler = (event) => {
+  const onEditHandler = event => {
     console.log(event);
     const { layers: { _layers } } = event;
     // eslint-disable-next-line array-callback-return
@@ -57,7 +53,7 @@ const LeafLetMap = () => {
     } );
 
   };
-  const onDeleteHandler = (event) => {
+  const onDeleteHandler = event => {
     console.log(event);
     const { layers: { _layers } } = event;
 
@@ -67,10 +63,13 @@ const LeafLetMap = () => {
     });
   };
 
+
+
+
   // console.log(JSON.stringify(mapMarkings));
   let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     const url = `http://localhost:8000/backend/api/maps/new/`;
     const config = {
@@ -88,9 +87,16 @@ const LeafLetMap = () => {
       });
   };
 
+
+
+
+
+
   return (
+    
     <Box width="95vw" height="large" margin='xsmall' alignSelf='center' direction='coulmn' >
       <Box elevation='medium' height='100%' width="60vw" pad='xsmall' border>
+
         <MapContainer style={ { width: '100%', height: '100%' } }
           center={ position } zoom={ zoom } ref={ mapRef }
         >
@@ -143,9 +149,6 @@ const LeafLetMap = () => {
           <Button fill label='Submit Polygon' onClick={handleSubmit}/>
         </Box>  
       </Box>
-        <Box elevation='medium' width='40vw' height='100%' border>
-          <AnalysisTable />
-        </Box>
 
     </Box>
   );
