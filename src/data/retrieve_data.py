@@ -111,7 +111,6 @@ def get_gee_data(aoi, date_range=["2020-05-01", "2020-07-01"], mode="sentinel_ra
         'region': aoi_obj})
     return link
 
-
 def download_data_from_link(link, area_name, mode, data_parent_path=None):
     if not data_parent_path:
         data_parent_path = Path("..", "..", "data", "raw")
@@ -159,5 +158,5 @@ def download_dataset(aoi_path, data_parent_path=None, get_sent2=True, get_glc=Tr
 
 
 if __name__ == '__main__':
-    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global.geojson")
+    aoi_path = Path("..", "..", "data", "raw", "test_aoi_global_100.geojson")
     download_dataset(aoi_path)

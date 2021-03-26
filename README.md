@@ -9,6 +9,23 @@ create environment with conda :
 
 `conda create --name myenv --file environment.yml`
 
+
+
+# Introduction
+
+
+# Main blocks
+
+## Retrieve satellite images
+
+## Detect land cover and segment
+
+## Calculate co2 metrics
+
+## User interaction (frontend & backend)
+
+
+
 ## download sentinel images
 
 *download images from google earth engine as zip file
