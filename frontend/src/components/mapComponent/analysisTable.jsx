@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import { Box, DataTable, Meter, Text } from 'grommet';
 import geojsonFile from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
-import test_aoi_subpolygon_with_metrics from '../../assets/test_aoi_subpolygon_with_metrics.json';
-import { number } from 'prop-types';
+
 
 let columns = [
   {
-    property: 'fid',
+    property: 'id',
     header: <Text>ID</Text>,
     sortable: true,
-    size: 'xxsmall',
-
-  },
-  {
-    property: 'DN',
-    header: <Text>DN</Text>,
     size: 'xxsmall',
 
   },
@@ -32,86 +25,28 @@ let columns = [
     size: 'small',
   },
   {
-    property: 'soil_co2_estimates',
-    header: 'Soil CO2 Estimates',
+    property: 'co2_metric_1',
+    header: 'co2_metric_1',
     sortable: true,
-    size: 'medium',
-
+    size: '',
     render: datum => (
       <Box pad={{ vertical: 'xsmall' }}>
         <Meter
-          values={[{ value: datum.soil_co2_estimates }]}
+          values={[{ value: datum.co2_metric_1 }]}
           thickness="small"
-          size="large"
-        />
-      </Box>
-    ),
-  },
-  {
-    property: 'vegetation_co2_estimates',
-    header: 'vegetation_co2_estimates',
-    sortable: true,
-    size: 'medium',
-    render: datum => (
-      <Box pad={{ vertical: 'xsmall' }}>
-        <Meter
-          values={[{ value: datum.vegetation_co2_estimates }]}
-          thickness="small"
-          size="large"
+          size="small"
         />
       </Box>
     ),
   },
 ]
 
-const newGeojson = test_aoi_subpolygon_with_metrics;
 
-const tempData = newGeojson;
-const tempFeatures = tempData.features
-const tableName = tempData.name
-
-console.log(newGeojson);
 const AnalysisTable = ({results}) => {
   const [ data, setData] = useState(geojsonFile)
 
   const tableName = geojsonFile.name
 
-let polyColor = properties => {
-  // console.log('from lopycolor function',properties);
-  if (properties.land_cover === 'Cropland 1') return "gray"; 
-  if (properties.land_cover === 'Cropland 2') return "yellow";
-  if (properties.land_cover === 'Forest') return "darkgreen";
-}
-
-
-
-
-
-
-tempFeatures.forEach(feature =>{ 
-  const tempFeature = {id: feature.properties.id, polygonName: feature.properties.land_cover, land_management: feature.properties.land_management, landCover: polyColor(feature.properties), soil_co2_estimates: feature.properties.soil_co2_estimates, vegetation_co2_estimates: feature.properties.vegetation_co2_estimates, coordinates: feature.geometry.coordinates[0]};
-  // console.log(tempFeature.coordinates);
-});
-
-let DATA = [];
-tempFeatures.forEach(feature => 
-  DATA.push(feature.properties)  
-)
-
-// console.log('the temp coord', tempCoordinates);
-
-const AnalysisTable = () => (
-
-  <Box align="center" pad="medium" height='100%'>
-    <Text weight='bold'>{tableName}</Text>
-    <DataTable 
-      sortable 
-      columns={columns} 
-      data={DATA} 
-      size="100%"
-    />
-  </Box>
-);
   useEffect(() => {
     let DATA = [];
     const tempFeatures = results.features
@@ -122,7 +57,7 @@ const AnalysisTable = () => (
   }, [results])
 
   return (
-    <Box align="center" pad="medium" height='100%'>
+    <Box align="center" pad="medium" height='100%' >
       <Text weight='bold'>{tableName}</Text>
       <DataTable 
         sortable 
