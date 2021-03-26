@@ -41,5 +41,5 @@ def calc_soil_co_metric(aoi):
       soc_array[i] = a_image.mean()
     
     print(soc_array)
-    
+    gdf['soc_metrics'] = soc_array
 
