@@ -7,11 +7,11 @@ import Navi from '../components/navi';
 import LeafLetMap from '../components/mapComponent/drawOnMap';
 
 
-
 const MapPage = () => (
     <>
       <Navi />
-      <Box flex direction='row' height='large' margin='large'>
+      <Box flex direction='row' height='large' margin='medium' background-color='red'>
+
         <Stack anchor='center'>  
         <Box>
           <LeafLetMap />

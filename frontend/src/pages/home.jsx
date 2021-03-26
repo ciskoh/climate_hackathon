@@ -1,28 +1,11 @@
 import * as React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Anchor, Box, Paragraph, Tab, Tabs, Text, Tip } from 'grommet';
+import { Anchor, Box, Paragraph, Tab, Tabs } from 'grommet';
 
 import Navi from '../components/navi';
 import { howItWorks, landproParagraphs, referencedArticles} from '../components/landProBase';
 import SampleCard from '../components/landProBase/sampleCard';
-
-
-const tabs = [
-
-  {
-    title: '',
-    content: '',
-  },
-  {
-    title: '',
-    content: '',
-  },
-  {
-    title: "What's next",
-    content: '',
-  },
-];
 
 const HomePage = () => {
   const [index, setIndex] = React.useState();

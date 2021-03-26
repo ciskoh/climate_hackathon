@@ -16,7 +16,7 @@ import { mapTiles } from './mapLayers';
 
 import { temporalPolygon } from './experimetalPolygon';
 import AnalysisTable from "./analysisTable";
-import geojsonFile from '../../assets/test_aoi_valencia_subpolygon_but_json.json';
+
 // =========================================================
 let polyColor = landCover => {
   if (landCover === 'Built-up') return "gray"; 
@@ -29,7 +29,7 @@ let polyColor = landCover => {
 
 
 const LeafLetMap = () => {
-  const [ position, setPosition] = useState([47.07, 8.325]);
+  const [ position ] = useState([47.07, 8.325]);
   const [ mapMarkings, setMapMarkings ] = useState([]);
   const [ results, setResults ] = useState({});
   const [ tempCoordinates, setTempCoordinates ] = useState([])
@@ -65,9 +65,6 @@ const LeafLetMap = () => {
     });
   };
 
-  // console.log(JSON.stringify(mapMarkings));
-  let polygonsMarked = JSON.stringify(mapMarkings, 0, 2)
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const url = `http://localhost:8000/backend/api/maps/new/`;
@@ -97,8 +94,6 @@ const LeafLetMap = () => {
         setTempCoordinates(inverted)
         })
   };
-  console.log("temp features:   ", tempCoordinates)
-  console.log("results:   ", results, results.length)
 
   return (
     <Fragment>
@@ -140,7 +135,7 @@ const LeafLetMap = () => {
               <LayersControl.Overlay name={`${feature.polygonName}`}>
                     <Polygon key={feature.id} positions={ feature.coordinates } color={ feature.landCover }/>
               </LayersControl.Overlay>
-                    )
+                  )
                 }
 
             </LayersControl>

@@ -41,8 +41,6 @@ let columns = [
   },
 ]
 
-
-
 const AnalysisTable = ({results}) => {
   const [ data, setData] = useState(geojsonFile)
 
