@@ -1,4 +1,4 @@
- """ complete function that downloads fdata, preprocess them and runs models.predict_model.py"""
+#  """ complete function that downloads fdata, preprocess them and runs models.predict_model.py"""
 
 import sys
 sys.path.append("..")
@@ -8,7 +8,7 @@ from models import predict_model
 from models import calc_vegetation_co_metric, calc_soil_co_metric
 
 
- def predict_main(aoi_path):
+def predict_main(aoi_path):
     """this functions trakes as input the json file fr4om frontend and returns the subpolygones with co2 metrcis
     aoi: json file with area of intreste from frontend
     """
